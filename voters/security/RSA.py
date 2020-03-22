@@ -1,6 +1,7 @@
 import random, string, re, os
 from fractions import gcd
 import nltk as nlp
+from nltk import tokenize
 
 
 class RSAProgram:

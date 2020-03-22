@@ -1,27 +1,28 @@
-import sqlite3
-from sqlite3 import Error
+import json
+from chain.trunk import database
 
 class Node:
-    def __init__(self,nodename = None):
-        self.nodename = nodename
-        self.compile = {}
-        create_connection("chain/chainbase/nodedb.db")
+    def __init__(self, blocks):
+        self.r = database.Database(pw="yumyum")
+        self.blocks = blocks
+        self.blockhash = self.blocks.chain_hash()
 
-    def save(self, data):
-        self.compile[data[0]] = data[1]
+    def __save__(self):
+        self.r.save_blocks(self.blocks.get_blocks(), self.blockhash)
         return 'saved'
 
-    def verify(self, hash):
-        return self.compile[hash]
+    def verify(self):
+        prev_hash = None
+        ind = 0
+        for x in self.blocks.get_blocks():
+            if json.loads(x)['prevhash'] != prev_hash:
+                raise Exception("possible insertion at index: " + str(ind) + "\n -- previous hash: " + prev_hash + "\n -- block content: " + "\n" + json.dumps(json.JSONDecoder().decode(x)))
+            ind += 1
+            prev_hash = json.loads(x)['hash']
+        return self.__save__()
 
+    def block(self):
+        return self.blocks
 
-class Masternode(Node):
-    def __init__(self):
-        self.nodes = []
-
-    def update_nodes(self, node_id):
-        self.nodes.append([node_id])
-
-    def network_nodes(self):
-        return self.nodes
-
+    def database(self):
+        return self.r
