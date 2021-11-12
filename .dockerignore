@@ -1,0 +1,6 @@
+.DS_*
+*.pyc
+.idea/
+*.iml
+target/
+*~

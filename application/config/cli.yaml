@@ -1,0 +1,6 @@
+blockchain:
+  redis:
+    port: 6379
+    host: localhost
+    name: 5510a843bc1b7acb9507a5f71de51b98
+    password: testing

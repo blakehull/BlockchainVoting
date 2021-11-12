@@ -1,34 +1,13 @@
 import datetime
 import hashlib
 import json
-from collections import Counter
-
-
-def __content__(content):
-    return {'id': content[0],
-            'vote': content[1]}
-
 
 def hash_it(tohash):
     return hashlib.sha512(tohash.encode('utf-8')).hexdigest()
 
+class Block:
+    def __init__(self, content, previous_block):
 
-class BlockModule:
-    def __init__(self):
-        self.current_index = 0
-        self.blocks = [self.__genesis_block__()]
-
-    def __genesis_block__(self):
-        time = datetime.datetime.utcnow().isoformat()
-        hash = str(time) + str(self.current_index) + str(['genesis', '']) + str(None)
-        return json.dumps({"index": self.current_index,
-                           "content": __content__(['genesis', '']),
-                           "hash": hash_it(hash),
-                           "time": time,
-                           "prevhash": None})
-
-    def create_block(self, content):
-        self.current_index += 1
         time = datetime.datetime.utcnow().isoformat()
         prevhash = self.get_block_hash(self.current_index - 1)
         hash = str(time) + str(self.current_index) + str(content) + str(prevhash)

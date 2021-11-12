@@ -4,3 +4,6 @@
 *.iml
 target/
 *~
+*.ipynb*
+**/*egg-info
+*egg-info
