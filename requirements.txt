@@ -1,7 +1,0 @@
-fastapi
-cachetools
-uvicorn
-redis~=3.5.3
-click~=8.0.3
-setuptools~=58.5.3
-PyYAML~=6.0
